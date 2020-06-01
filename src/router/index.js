@@ -1,45 +1,29 @@
 import Vue from 'vue'
-import Router from 'vue-router'
+import VueRouter from 'vue-router'
+import Home from '../views/Home.vue'
 
-import login from '@/view/login'
-import demo from '@/view/demo'
-import zanPick from '@/view/demo/zanPick'
+Vue.use(VueRouter)
 
-
-
-
-Vue.use(Router)
-
-export default new Router({
-  mode: 'history', //切换路径模式，变成history模式
-  routes: [
-    {
-      path: '/login',
-      name: 'login',
-      component: login,
-      meta: {  title: 'login',keepAlive: true },
-    } ,
-    {
-      path: '/',
-      name: 'demo',
-      component: demo,
-      meta: {  title: 'demo',keepAlive: true },
-    },
-  
-    {
-      path: '/zanPick',
-      name: 'zanPick',
-      component: zanPick,
-      meta: {  title: 'zanPick', keepAlive: true },
-    }
-
-  ],
-  scrollBehavior (to, from, savedPosition) {
-    if (savedPosition) {
-      return savedPosition
-    } else {
-      return { x: 0, y: 0 }
-    }
+  const routes = [
+  {
+    path: '/',
+    name: 'Home',
+    component: Home
+  },
+  {
+    path: '/about',
+    name: 'About',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   }
+]
 
+const router = new VueRouter({
+  mode: 'history',
+  base: process.env.BASE_URL,
+  routes
 })
+
+export default router
